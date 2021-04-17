@@ -4,6 +4,11 @@
 #include <dConsole.h>
 #include <PubSubClient.h>
 #include <Ticker.h>
+
+#ifndef _PINS_H
+#include <pins.h>
+#endif
+
 /*
  * ********************************************************************************
  *            START CONFIGURATION SECTION
@@ -74,7 +79,9 @@ void wakeButtonPressed();
 void statusButtonPressed();
 void upButtonPressed();
 void downButtonPressed();
-
+void ledON();
+void ledOFF();
+void tick();
 void updateTemperature(float temp, float outdoorTemp);
 
 

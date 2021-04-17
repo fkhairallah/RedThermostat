@@ -13,7 +13,6 @@
 
  *************************************************************************************/
 #include <Arduino.h>
-#include <pins.h>
 #include <RedGlobals.h>
 #include <EasyButton.h>
 
@@ -30,6 +29,22 @@ EasyButton wakeButton(pgm_pin);
 EasyButton upButton(up_pin);
 EasyButton downButton(down_pin);
 #endif
+
+/*
+ * ********************************************************************************
+
+ a few routines to drive the onboard blueLED
+
+ * ********************************************************************************
+*/
+void ledON()
+{
+  digitalWrite(blueLED, false);
+}
+void ledOFF()
+{
+  digitalWrite(blueLED, true);
+}
 
 void tick()
 {

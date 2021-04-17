@@ -6,7 +6,6 @@
 */
 #include <OneWire.h>
 #include <DallasTemperature.h>
-#include <pins.h>
 #include <RedGlobals.h>
 
 #ifdef TEMP_SENSOR_PRESENT

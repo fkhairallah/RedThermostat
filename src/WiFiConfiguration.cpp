@@ -21,7 +21,6 @@
 #include <Ticker.h>
 #include <LittleFS.h>
 
-#include <Pins.h>
 #include <RedGlobals.h>
 
 // configuration parameters

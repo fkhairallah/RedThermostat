@@ -47,6 +47,11 @@ void dConsole::disableSerial()
 
 void dConsole::enableTelnet(int tcpPort)
 {
+	if (telnetPort) // Telnet is already enabled
+	{
+		this->println("ERR: Attempting to open second telnet port");
+		return;
+	}
 	telnetPort = tcpPort;
 	if (telnetPort)
 	{
