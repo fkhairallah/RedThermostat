@@ -93,8 +93,6 @@ void setup() {
   configureESP(); // load configuration from FLASH & configure WIFI
 
   digitalWrite(blueLED, LOW);
-  console.enableTelnet(23);
-  //console.enableUDP(WiFi.localIP(), 10110);
   console.print("Telnet Enabled on ");
   console.println(WiFi.localIP().toString());
 
