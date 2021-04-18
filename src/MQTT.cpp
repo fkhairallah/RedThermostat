@@ -1,19 +1,11 @@
-/*
- * regular PubSubClient library had a bug that prevented the callback when something posted
- * to a topic. Migrated to this newer version
- * https://github.com/Imroy/pubsubclient
+/**********************************************************************************
+ *
+ * Configure the MQTT server by:
+ *     - create all the topic using prefix/location/subtopic
+ *     - configure MQTT server and port and setup callback routine
+ *     - attempt a connection and log to debug topic if success
  * 
- * 
- * 
- * ********************************************************************************
-
-   Configure the MQTT server by:
-    - create all the topic using prefix/location/subtopic
-    - configure MQTT server and port and setup callback routine
-    - attempt a connection and log to debug topic if success
-
- * ********************************************************************************
-*/
+ *********************************************************************************/
 #include <RedGlobals.h>
 
 

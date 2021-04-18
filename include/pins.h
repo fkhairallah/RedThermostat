@@ -1,27 +1,4 @@
-/*
- * ********************************************************************************
- * 
- * This program runs undercabinet LED lights AND temperature sensor from a single
- * WEMOS D1 esp8266
- * 
- * 
- * 
- * Hardware configuration:
- * 
- *   - Blue LED connected to pin 2
- *   - 1Wire thermocouple connected to pin 12
- 
-
-    Hardware Notes:
-
-    - GPIO-0 must be tied to ground for programming
-    - GPIO-0 floats to run program
-    - GPIO-0 runs Red LED on Huzzah
-    - GPIO-2 is tied to Blue Led (*NOT* a PWM pin)
-    - GPIO-13 is RESERVED
-
- * ********************************************************************************
- */
+/*******************   See README.md  *****************************/
 #ifndef _PINS_H
 #define _PINS_H
 

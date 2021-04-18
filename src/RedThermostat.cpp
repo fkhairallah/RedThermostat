@@ -65,11 +65,11 @@ void tick()
 void setup() {
   pinMode(blueLED, OUTPUT);
 
+#ifdef DISPLAY_PRESENT
   // configure the pin and make sure heat isn't turned on
   pinMode(heat_pin, OUTPUT);
   digitalWrite(heat_pin, LOW);
 
-#ifdef DISPLAY_PRESENT
   wakeButton.begin();
   wakeButton.onPressed(wakeButtonPressed);
   wakeButton.onPressedFor(1500, statusButtonPressed);
@@ -78,9 +78,6 @@ void setup() {
   downButton.begin();
   downButton.onPressed(downButtonPressed);
 #endif
-
-  // start ticker with 0.5 because we start in AP mode and try to connect
-  ticker.attach(0.6, tick);
 
   setupConsole();
 
