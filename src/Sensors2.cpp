@@ -102,7 +102,7 @@ void serviceSensors()
 
   if ((unsigned long)(millis() - lastSensorQuery) >= sensorSendInterval)
   {
-    console.println("Requesting Temp...");
+
     sensors.requestTemperatures(); // Send the command to get temperatures
 
     float tempF = sensors.getTempF(tempDeviceAddress);
