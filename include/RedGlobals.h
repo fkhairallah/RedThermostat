@@ -40,6 +40,7 @@ void writeConfigToDisk();
 void configureOTA(char *hostName);
 
 // in MQTTConfig
+extern bool debugMode;
 void configureMQTT();
 bool checkMQTTConnection();
 void mqttDisconnect();
@@ -58,6 +59,7 @@ void serviceSensors();
 
 
 // in RedThermostat
+extern float averageTemp;        // Average temp for the last interval -- what is displayed
 void ledON();
 void ledOFF();
 void tick();

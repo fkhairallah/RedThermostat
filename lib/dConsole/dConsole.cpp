@@ -74,6 +74,11 @@ void dConsole::disableTelnet()
 	}
 }
 
+void dConsole::closeTelnetConnection()
+{
+	if (client) client.stop();
+}
+
 void dConsole::enableUDP(IPAddress localIP, int port)
 {
 	udpPort = port;
@@ -143,7 +148,13 @@ bool dConsole::isTelnetConnected() {
     {
 		if (server->status() == CLOSED) return true;
 
-		if (!client) client = server->available();
+		// if we don't have a client, check to see if we have one.
+		// then flush the queue so we don't get weird characters
+		if (!client) 
+		{
+			client = server->available();
+			client.flush();
+		}
 	
 
 		if (client) {
@@ -153,6 +164,7 @@ bool dConsole::isTelnetConnected() {
 		  // client is not connected, stop and get a new one
 		  client.stop();
 		  client = server->available();
+		  client.flush();
 
 		}
 	}
@@ -273,26 +285,29 @@ bool dConsole::check()
 			while (client.available()) {
 				char c = client.read();
 				yield();	// yield back to the OS
-				if (c == '\r') continue; // ignore CR
-				if ((c == '\n') || (bufferCount >= CMD_MAX_LENGTH) )  // LF is a command
-				{
 
-					// interecpt 'exit' command
-					if (strcmp(tempBuffer,"exit") == 0)
+				if (c < 127) { // we sometimes start with weird characters
+					if (c == '\r') continue; // ignore CR
+					if ((c == '\n') || (bufferCount >= CMD_MAX_LENGTH) )  // LF is a command
 					{
-						tempBuffer[0] = 0;
-						bufferCount = 0;
-						client.stop();
-						return false;
+
+						// interecpt 'exit' command
+						if (strcmp(tempBuffer,"exit") == 0)
+						{
+							tempBuffer[0] = 0;
+							bufferCount = 0;
+							client.stop();
+							return false;
+						}
+
+						// we have a full line--> exit true
+						return parseCommand();
 					}
+					else {
+						tempBuffer[bufferCount++] = c;
+						tempBuffer[bufferCount] = 0;
 
-					// we have a full line--> exit true
-					return parseCommand();
-				}
-				else {
-					tempBuffer[bufferCount++] = c;
-					tempBuffer[bufferCount] = 0;
-
+					}
 				}
 			}
 		}

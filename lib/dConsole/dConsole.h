@@ -34,6 +34,7 @@ public:
 	void disableSerial();
 	void enableTelnet(int tcpPort);
 	void disableTelnet();
+	void closeTelnetConnection();
 	void enableUDP(IPAddress localIP, int udpPort);
 	void disableUDP();
 

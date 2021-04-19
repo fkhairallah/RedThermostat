@@ -27,7 +27,7 @@ int secondsWithoutMQTT;
 // MQTT Settings
 // debug mode, when true, will send all packets received from the heatpump to topic mqtt_debug_topic
 // this can also be set by sending "on" to mqtt_debug_set_topic
-bool _debugMode = false;
+bool debugMode = false;
 bool retain = true; //change to false to disable mqtt retain
 
 
@@ -96,13 +96,6 @@ void mqttPublishTemperature(char* tempStr)
 }
 #endif
 
-/*
- * ********************************************************************************
-
-    ********************  END OF CUSTOMIZABLE SECTION  ***************************
-
- * ********************************************************************************
-*/
 
 
 /*
@@ -133,12 +126,12 @@ void mqttCallback(char *topic, byte *payload, unsigned int length)
     {
       if (strcmp(message, "on") == 0)
       {
-        _debugMode = true;
+        debugMode = true;
         mqtt_client.publish(mqtt_debug_topic, "debug mode enabled");
       }
       else if (strcmp(message, "off") == 0)
       {
-        _debugMode = false;
+        debugMode = false;
         mqtt_client.publish(mqtt_debug_topic, "debug mode disabled");
       }
     }

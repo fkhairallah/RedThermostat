@@ -8,6 +8,40 @@
 
 dConsole console;
 
+/*
+ * ********************************************************************************
+
+  ********************  CUSTOMIZABLE SECTION  ***************************
+
+ * ********************************************************************************
+*/
+#define CUSTOM_COMMANDS "Custom Commands: 1, temp"
+
+void executeCustomCommands(char* commandString,char* parameterString)
+{
+  if (strcmp(commandString, "1") == 0)
+  {
+    console.println("Scanning for 1Wire");
+    configSensors(_TEMP_SENSOR_PERIOD, &updateTemperature);
+  }
+
+
+  // show current temp
+   if (strcmp(console.commandString, "temp") == 0)
+  {
+    console.printf("Current temperature reading = %0.1f\r\n",averageTemp);
+  }
+
+}
+
+/*
+ * ********************************************************************************
+
+    ********************  END OF CUSTOMIZABLE SECTION  ***************************
+
+ * ********************************************************************************
+*/
+
 void setupConsole()
 {
   console.enableSerial(&Serial, true);
@@ -20,13 +54,23 @@ void handleConsole()
   // console
   if (console.check())
   {
+    executeCustomCommands(console.commandString, console.parameterString);
 
     if (strcmp(console.commandString, "?") == 0)
     {
-      console.println("\n\n\n[RED]Thermostat");
-      console.print("IP address: ");
+      console.print("[RED]Thermostat ");
+      console.println(VERSION);
+      console.printf("Host: %s - %s @", myHostName, deviceLocation);
       console.println(WiFi.localIP().toString());
-      console.println("Available commands are:  1, location room, mqtt server port, status, reset (Factory), reboot");
+      console.printf("MQTT Server %s, port: %s\r\n", mqttServer, mqttPort);
+      console.println("Commands: ?, debug, location room, mqtt server, reset (Factory), reboot, quit");
+      console.println(CUSTOM_COMMANDS);
+    }
+    if (strcmp(console.commandString, "debug") == 0)
+    {
+      debugMode = !debugMode;
+      console.print("Debug mode is now ");
+      console.println(debugMode);
     }
     if (strcmp(console.commandString, "reset") == 0)
     {
@@ -44,13 +88,6 @@ void handleConsole()
       ESP.reset();
       delay(5000);
     }
-    if (strcmp(console.commandString, "status") == 0)
-    {
-      console.println(deviceLocation);
-      console.println(myHostName);
-      console.printf("MQTT Server %s, port: %s\r\n", mqttServer, mqttPort);
-    }
-
     if (strcmp(console.commandString, "mqtt") == 0)
     {
       strcpy(mqttServer, console.parameterString);
@@ -66,10 +103,12 @@ void handleConsole()
       console.printf("location changed to %s\r\n", deviceLocation);
       console.println("Change will take effect after next reboot");
     }
-    if (strcmp(console.commandString, "1") == 0)
+    if (strcmp(console.commandString, "quit") == 0)
     {
-      console.println("Scanning for 1Wire");
-      configSensors(_TEMP_SENSOR_PERIOD, &updateTemperature);
+      console.print("quiting...");
+      console.closeTelnetConnection();
+      delay(500);
+      console.println("");
     }
 
     console.print("[RED]> ");
