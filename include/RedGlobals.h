@@ -27,30 +27,23 @@
 #define VERSION "V1.3"  // N.B: document changes in README.md
 #define MQTT_TOPIC_PREFIX "thermostat" // prefix for all MQTT topics
 
-// in WiFiConfigurations.ino
+// in WiFiConf
 extern char myHostName[];
 extern char deviceLocation[];
 extern char mqttServer[];
 extern char mqttPort[];
 extern char mqttUser[];
 extern char mqttPwd[];
-extern char numberOfLED[]; // nunber of leds in the strings
 void configureESP();       // load configuration from FLASH & configure WIFI
 void checkConnection(); // check WIFI connection
 void writeConfigToDisk();
 void configureOTA(char *hostName);
 
-// in MQTT
-extern PubSubClient mqtt_client;
-extern char mqtt_topic[];
-extern char mqtt_temperature_topic[];
-extern char mqtt_requiredTemperature_topic[];
-extern char mqtt_debug_topic[];
-extern char mqtt_debug_set_topic[];
+// in MQTTConfig
 void configureMQTT();
 bool checkMQTTConnection();
 void mqttDisconnect();
-void mqttCallback(char *topic, byte *payload, unsigned int length);
+void mqttPublishTemperature(char* tempStr);
 
 // in console.ino
 extern dConsole console;
@@ -58,31 +51,24 @@ void setupConsole();
 void handleConsole();
 
 #ifdef TEMP_SENSOR_PRESENT
-// in Sensors.ino
+// in Sensors2.ino
 void configSensors(long interval, void (*sensorCallback)(float insideTemp, float outsideTemp));
 void serviceSensors();
 #endif
 
 
-// in lighting.ino
-void initializeLED(); // turn all LEDs off.
-void configLED();     // update with actual # of LED
-void setLEDPower(char *mode);   // set LED power
-void setLEDMode(int mode);      // & mode
-void executeLED();
-void fillList(uint32_t list[], int count);
-void fillRainbow();
-
 // in RedThermostat
+void ledON();
+void ledOFF();
+void tick();
+void updateTemperature(float temp, float outdoorTemp);
+#ifdef DISPLAY_PRESENT
 extern int requiredTemperature;
 void wakeButtonPressed();
 void statusButtonPressed();
 void upButtonPressed();
 void downButtonPressed();
-void ledON();
-void ledOFF();
-void tick();
-void updateTemperature(float temp, float outdoorTemp);
+#endif
 
 
 #endif

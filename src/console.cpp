@@ -54,11 +54,10 @@ void handleConsole()
     if (strcmp(console.commandString, "mqtt") == 0)
     {
       strcpy(mqttServer, console.parameterString);
-      console.println(mqttServer);
-      mqtt_client.setServer(mqttServer, int(mqttPort));
       writeConfigToDisk();
       console.print("MQTT server changed to ");
       console.println(mqttServer);
+      mqttDisconnect();
     }
     if (strcmp(console.commandString, "location") == 0)
     {

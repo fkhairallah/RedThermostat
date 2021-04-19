@@ -6,6 +6,8 @@ It can exist as a simple temperature sensor
 
 or it can have a display, ability to set required temp, up/down buttons and can drive supplemental electric heat
 
+***Because of the minimal functionaly, this is considered the master template for all other [RED] devices***
+
 # Version History
 
 ## V1.1
@@ -15,7 +17,8 @@ or it can have a display, ability to set required temp, up/down buttons and can 
     Moved to Platform.IO
 
 ## V1.3
-    Upgraded to support ArduinoJSON 6
+    Upgraded to support ArduinoJSON 6 
+    WifiConfig & MQTTConfig now contain customizable sections
 
 
 # Hardware Notes

@@ -176,7 +176,7 @@ void upButtonPressed()
   requiredTemperature++;
   displayRequiredTemperature(requiredTemperature);
   sprintf(str, "%i", requiredTemperature);
-  mqtt_client.publish(mqtt_requiredTemperature_topic, str);
+  .publish(mqtt_requiredTemperature_topic, str);
 
 }
 
@@ -188,7 +188,7 @@ void downButtonPressed()
   requiredTemperature--;
   displayRequiredTemperature(requiredTemperature);
   sprintf(str, "%i", requiredTemperature);
-  mqtt_client.publish(mqtt_requiredTemperature_topic, str);
+  .publish(mqtt_requiredTemperature_topic, str);
 
 }
 #endif
@@ -216,7 +216,7 @@ void updateTemperature(float temp, float temp2)
     tempAccumulator = 0;
     tempNumberOfReading = 0;
     sprintf(str, "%.1f", averageTemp);
-    mqtt_client.publish(mqtt_temperature_topic, str);
+    mqttPublishTemperature(str);
     lastTempSend = millis();
 
     tick();
