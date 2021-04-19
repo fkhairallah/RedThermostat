@@ -4,6 +4,9 @@ This class will implement a 'virtual console' that simulates the Serial debugger
 
 it uses a telnet protocol on port 21
 
+UDP broadcast doesn't seem to work
+
+V2.0 -- implemented backspace and ^u operations
 
 * (c) 2014 Deligent LLC - All rights reserved
 *************************************************************************************************/

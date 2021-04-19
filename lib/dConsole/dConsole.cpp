@@ -243,22 +243,40 @@ bool dConsole::check()
 	{
 		while (serial->available()) {
 			char c = serial->read();
-			//printf("%i\r\n",c);
-			if (c < 127) { // we sometimes start with weird characters
-				yield();	// yield back to the OS
-				if (c == '\r') continue; // ignore CR
-				if ( (c == '\n') || (bufferCount >= CMD_MAX_LENGTH) ) // LF is a command or max length
-				{
-					return parseCommand();
+			yield(); // yield back to the OS
 
+			//printf("%i\r\n",c);
+			if (c == '\x08') // backspace
+			{
+				if (bufferCount > 0)
+				{
+					tempBuffer[--bufferCount] = 0;
 				}
-				else {
-					serial->write(c);
-					tempBuffer[bufferCount++] = c;
-					tempBuffer[bufferCount] = 0;
-					//println(tempBuffer);
-				}
+				serial->write(c);
+				continue;
 			}
+			if (c == '\x15') // Control U -- erase entire line
+			{
+				bufferCount = 0;
+				tempBuffer[bufferCount] = 0;
+				serial->println();
+				continue;
+			}
+
+			if (c > 127) continue; // we sometimes start with weird characters
+			if (c == '\r') continue; // ignore CR
+			if ( (c == '\n') || (bufferCount >= CMD_MAX_LENGTH) ) // LF is a command or max length
+			{
+				return parseCommand();
+
+			}
+			else {
+				serial->write(c);
+				tempBuffer[bufferCount++] = c;
+				tempBuffer[bufferCount] = 0;
+				//println(tempBuffer);
+			}
+			
 		}
 	}
 
@@ -296,27 +314,18 @@ bool dConsole::check()
 					{
 						tempBuffer[--bufferCount] = 0;
 					}
-
+					continue;
 				}
 				if (c == '\x15') // Control U -- erase entire line
 				{
 					bufferCount = 0;
 					tempBuffer[bufferCount] = 0;
+					continue;
 				}
 
 				if (c == '\r') continue; // ignore CR
 				if ((c == '\n') || (bufferCount >= CMD_MAX_LENGTH) )  // LF is a command
 				{
-
-					// interecpt 'exit' command
-					if (strcmp(tempBuffer,"exit") == 0)
-					{
-						tempBuffer[0] = 0;
-						bufferCount = 0;
-						client.stop();
-						return false;
-					}
-
 					// we have a full line--> exit true
 					return parseCommand();
 				}
