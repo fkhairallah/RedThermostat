@@ -229,7 +229,9 @@ void dConsole::flush() {
 
   if (disconnected()) return;
 
-  server->flush();
+  serial->flush();
+
+  client.flush();
 
 }
 
@@ -274,6 +276,7 @@ bool dConsole::check()
 					println("Connected to [RED] debug console");
 					println("'?' for more, 'exit' to exit");
 					print("[RED]> ");
+
 				}
 			}
 		}
@@ -286,28 +289,41 @@ bool dConsole::check()
 				char c = client.read();
 				yield();	// yield back to the OS
 
-				if (c < 127) { // we sometimes start with weird characters
-					if (c == '\r') continue; // ignore CR
-					if ((c == '\n') || (bufferCount >= CMD_MAX_LENGTH) )  // LF is a command
+
+				if (c == '\x08') // backspace
+				{
+					if (bufferCount > 0)
 					{
-
-						// interecpt 'exit' command
-						if (strcmp(tempBuffer,"exit") == 0)
-						{
-							tempBuffer[0] = 0;
-							bufferCount = 0;
-							client.stop();
-							return false;
-						}
-
-						// we have a full line--> exit true
-						return parseCommand();
+						tempBuffer[--bufferCount] = 0;
 					}
-					else {
-						tempBuffer[bufferCount++] = c;
-						tempBuffer[bufferCount] = 0;
 
+				}
+				if (c == '\x15') // Control U -- erase entire line
+				{
+					bufferCount = 0;
+					tempBuffer[bufferCount] = 0;
+				}
+
+				if (c == '\r') continue; // ignore CR
+				if ((c == '\n') || (bufferCount >= CMD_MAX_LENGTH) )  // LF is a command
+				{
+
+					// interecpt 'exit' command
+					if (strcmp(tempBuffer,"exit") == 0)
+					{
+						tempBuffer[0] = 0;
+						bufferCount = 0;
+						client.stop();
+						return false;
 					}
+
+					// we have a full line--> exit true
+					return parseCommand();
+				}
+				else 
+				{
+					tempBuffer[bufferCount++] = c;
+					tempBuffer[bufferCount] = 0;
 				}
 			}
 		}
@@ -330,8 +346,6 @@ void dConsole::sendUDP(char* sentence)
   udp.write(sentence);
   udp.endPacket();
 }
-
-
 
 
 // parse line typed in into a command and a parameter
