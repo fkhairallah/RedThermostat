@@ -90,12 +90,23 @@ bool processMQTTcommand(char* topic, char* message)
 
 #ifdef TEMP_SENSOR_PRESENT
 // Publish the temperature to the MQTT server
-void mqttPublishTemperature(char* tempStr)
+void publishTemperature(int temp)
 {
+  char tempStr[32];
+sprintf(tempStr, "%i", temp);
   mqtt_client.publish(mqtt_temperature_topic, tempStr);
 }
 #endif
 
+#ifdef DISPLAY_PRESENT
+void publishRequiredTemp(int temp)
+{
+  char tempStr[32];
+  sprintf(tempStr, "%i", temp);
+  mqtt_client.publish(mqtt_requiredTemperature_topic, tempStr);
+
+}
+#endif
 /*
  * ********************************************************************************
 

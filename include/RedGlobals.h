@@ -16,13 +16,12 @@
 */
 
 #define TEMP_SENSOR_PRESENT // indicates a temperature sensor is present
-//#define DISPLAY_PRESENT                 // indicates a temperature sensor is present
+#define DISPLAY_PRESENT     // indicates a screen is present
 
-#ifdef TEMP_SENSOR_PRESENT
 #define _TEMP_SENSOR_PERIOD 10000         // in ms the frequency of temperature sensor reading
 #define _SEND_ROOM_TEMP_INTERVAL_MS 60000 // in ms how often the temperature is sent back to the server
 #define TEMPERATURE_PRECISION 9           // Lower resolution
-#endif
+#define _DISPLAY_INTERVAL 5000              // in ms how long before the display is dimmed then turned off
 
 #define VERSION "V1.3"  // N.B: document changes in README.md
 #define MQTT_TOPIC_PREFIX "thermostat" // prefix for all MQTT topics
@@ -44,7 +43,12 @@ extern bool debugMode;
 void configureMQTT();
 bool checkMQTTConnection();
 void mqttDisconnect();
-void mqttPublishTemperature(char* tempStr);
+#ifdef TEMP_SENSOR_PRESENT
+void publishTemperature(int temp);
+#endif
+#ifdef DISPLAY_PRESENT
+void publishRequiredTemp(int temp);
+#endif
 
 // in console.ino
 extern dConsole console;
@@ -53,8 +57,18 @@ void handleConsole();
 
 #ifdef TEMP_SENSOR_PRESENT
 // in Sensors2.ino
+extern int numberOfDevices; // Number of temperature devices found
 void configSensors(long interval, void (*sensorCallback)(float insideTemp, float outsideTemp));
 void serviceSensors();
+#endif
+
+// in display.cpp
+#ifdef DISPLAY_PRESENT
+bool configureDisplay();
+void displayStatus();
+void displayRequiredTemperature(int temp);
+void serviceDisplay();
+void displayTemperature(float averageTemp);
 #endif
 
 
@@ -65,6 +79,7 @@ void ledOFF();
 void tick();
 void updateTemperature(float temp, float outdoorTemp);
 #ifdef DISPLAY_PRESENT
+extern bool heatIsOn;
 extern int requiredTemperature;
 void wakeButtonPressed();
 void statusButtonPressed();

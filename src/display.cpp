@@ -10,6 +10,8 @@
 
  * ********************************************************************************
 */
+#include <RedGlobals.h>
+
 #ifdef DISPLAY_PRESENT
 #include <Wire.h>
 #include <Adafruit_GFX.h>
@@ -46,6 +48,51 @@ Ticker displayDimmerTicker;
 
 bool displayOn;
 long displayMillis;         // dim the display at this timestamp
+
+
+
+void showHeat()
+{
+  if (heatIsOn)
+  {
+    display.drawBitmap(0 , display.height()-HEAT_HEIGHT, heatBitmap, HEAT_WIDTH, HEAT_HEIGHT, 1);
+  }
+}
+
+void showWiFi()
+{
+
+  if (WiFi.status() == WL_CONNECTED)
+  {
+
+    display.drawBitmap(display.width()  - WIFI_WIDTH , WIFI_HEIGHT,
+                       wifiBitmap, WIFI_WIDTH, WIFI_HEIGHT, 1);
+  }
+}
+
+
+void blink_the_display()
+{
+  display.dim(displayDimState);
+  displayDimState = !displayDimState;
+}
+
+void displayBlink(bool blink)
+{
+  if (!displayPresent) return;
+
+  if (blink)
+  {
+    displayDimmerTicker.attach(1, blink_the_display);
+  }
+  else
+  {
+    displayDimmerTicker.detach();
+  }
+
+}
+
+
 
 
 bool configureDisplay()
@@ -94,7 +141,7 @@ void displayStatus()
   display.dim(false);
   display.setFont();
   display.setCursor(0, 0);
-  display.println("[RED]Thermostat " + String(version));
+  display.println("[RED]Thermostat " + String(VERSION));
   display.println(WiFi.localIP().toString());
   display.print("Location: ");
   display.println(deviceLocation);
@@ -172,45 +219,5 @@ void displayRequiredTemperature(int temp)
   displayMillis = millis();
 }
 
-void showWiFi()
-{
-
-  if (WiFi.status() == WL_CONNECTED)
-  {
-
-    display.drawBitmap(display.width()  - WIFI_WIDTH , WIFI_HEIGHT,
-                       wifiBitmap, WIFI_WIDTH, WIFI_HEIGHT, 1);
-  }
-}
-
-void showHeat()
-{
-  if (heatIsOn)
-  {
-    display.drawBitmap(0 , display.height()-HEAT_HEIGHT, heatBitmap, HEAT_WIDTH, HEAT_HEIGHT, 1);
-  }
-}
-
-void displayBlink(bool blink)
-{
-  if (!displayPresent) return;
-
-  if (blink)
-  {
-    displayDimmerTicker.attach(1, blink_the_display);
-  }
-  else
-  {
-    displayDimmerTicker.detach();
-  }
-
-}
-
-
-void blink_the_display()
-{
-  display.dim(displayDimState);
-  displayDimState = !displayDimState;
-}
 
 #endif

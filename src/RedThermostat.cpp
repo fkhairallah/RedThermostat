@@ -28,6 +28,7 @@ Ticker ticker;            // ticker
 EasyButton wakeButton(pgm_pin);
 EasyButton upButton(up_pin);
 EasyButton downButton(down_pin);
+bool heatIsOn = false;
 #endif
 
 /*
@@ -111,8 +112,8 @@ void setup() {
   pinMode(SCL_pin, OUTPUT);
   pinMode(SDA_pin, OUTPUT);
 
-  configureDisplay();
-  displayStatus();
+  int requiredTemperature;
+
 #endif
 }
 
@@ -170,25 +171,19 @@ void statusButtonPressed()
 
 void upButtonPressed()
 {
-  char str[32];
-
   console.println("Button: up");
   requiredTemperature++;
   displayRequiredTemperature(requiredTemperature);
-  sprintf(str, "%i", requiredTemperature);
-  .publish(mqtt_requiredTemperature_topic, str);
+  publishRequiredTemp(requiredTemperature);
 
 }
 
 void downButtonPressed()
 {
-  char str[32];
 
   console.println("Button: down");
   requiredTemperature--;
   displayRequiredTemperature(requiredTemperature);
-  sprintf(str, "%i", requiredTemperature);
-  .publish(mqtt_requiredTemperature_topic, str);
 
 }
 #endif
@@ -205,7 +200,6 @@ void downButtonPressed()
 */
 void updateTemperature(float temp, float temp2)
 {
-  char str[128];
   tempAccumulator += temp;
   tempNumberOfReading++;
 
@@ -215,8 +209,7 @@ void updateTemperature(float temp, float temp2)
     averageTemp = tempAccumulator / tempNumberOfReading;
     tempAccumulator = 0;
     tempNumberOfReading = 0;
-    sprintf(str, "%.1f", averageTemp);
-    mqttPublishTemperature(str);
+    publishTemperature(averageTemp);
     lastTempSend = millis();
 
     tick();
