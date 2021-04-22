@@ -70,7 +70,7 @@ void subscribeToTopics()
 // returns FALSE if the topic is outside the scope of this function
 bool processMQTTcommand(char* topic, char* message)
 {
-#ifdef DISPLAY_PRESENT
+#ifdef BUTTONS_PRESENT
   if (strcmp(topic, mqtt_requiredTemperature_topic) == 0)
   {
     int temp = atoi(message);

@@ -24,13 +24,12 @@ unsigned long lastTempSend;
 float averageTemp;        // Average temp for the last interval -- what is displayed
 Ticker ticker;            // ticker
 
-#ifdef DISPLAY_PRESENT
+#ifdef BUTTONS_PRESENT
 EasyButton wakeButton(pgm_pin);
 EasyButton upButton(up_pin);
 EasyButton downButton(down_pin);
 bool heatIsOn = false;
 int requiredTemperature;
-
 #endif
 
 /*
@@ -68,7 +67,7 @@ void tick()
 void setup() {
   pinMode(blueLED, OUTPUT);
 
-#ifdef DISPLAY_PRESENT
+#ifdef BUTTONS_PRESENT
   // configure the pin and make sure heat isn't turned on
   pinMode(heat_pin, OUTPUT);
   digitalWrite(heat_pin, LOW);
@@ -107,14 +106,13 @@ void setup() {
   configSensors(_TEMP_SENSOR_PERIOD, &updateTemperature);
 
 #ifdef DISPLAY_PRESENT
+  // WeMOD D1 uses Pins 4&5 for I2C
   // switch UART pins to digital mode so they can be used by the display
-  console.disableSerial();
+  // console.disableSerial();
   pinMode(SCL_pin, FUNCTION_3);
   pinMode(SDA_pin, FUNCTION_3);
   pinMode(SCL_pin, OUTPUT);
-  pinMode(SDA_pin, OUTPUT);
-
-  
+  pinMode(SDA_pin, OUTPUT);  
 #endif
 }
 
@@ -133,12 +131,14 @@ void loop() {
   // service temperature and other sensos
   serviceSensors();
 
-#ifdef DISPLAY_PRESENT
+#ifdef BUTTONS_PRESENT
   // service the buttons
   wakeButton.read();
   upButton.read();
   downButton.read();
+#endif
 
+#ifdef DISPLAY_PRESENT
   // service display taking care of diming it and turning it off after _DISPLAY_INTERVAL
   serviceDisplay();
 #endif
@@ -156,7 +156,7 @@ void loop() {
 
  * ********************************************************************************
 */
-#ifdef DISPLAY_PRESENT
+#ifdef BUTTONS_PRESENT
 
 void wakeButtonPressed()
 {

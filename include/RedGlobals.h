@@ -17,6 +17,7 @@
 
 #define TEMP_SENSOR_PRESENT // indicates a temperature sensor is present
 #define DISPLAY_PRESENT     // indicates a screen is present
+//#define BUTTONS_PRESENT     // indicates up/down buttons are present
 
 #define _TEMP_SENSOR_PERIOD 10000         // in ms the frequency of temperature sensor reading
 #define _SEND_ROOM_TEMP_INTERVAL_MS 60000 // in ms how often the temperature is sent back to the server
@@ -78,6 +79,7 @@ void ledON();
 void ledOFF();
 void tick();
 void updateTemperature(float temp, float outdoorTemp);
+
 #ifdef DISPLAY_PRESENT
 extern bool heatIsOn;
 extern int requiredTemperature;

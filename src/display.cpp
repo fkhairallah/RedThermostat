@@ -53,10 +53,12 @@ long displayMillis;         // dim the display at this timestamp
 
 void showHeat()
 {
+#ifdef BUTTONS_PRESENT
   if (heatIsOn)
   {
     display.drawBitmap(0 , display.height()-HEAT_HEIGHT, heatBitmap, HEAT_WIDTH, HEAT_HEIGHT, 1);
   }
+#endif
 }
 
 void showWiFi()
@@ -187,6 +189,7 @@ void displayTemperature(float temp)
 
 }
 
+#ifdef BUTTONS_PRESENT
 void displayRequiredTemperature(int temp)
 {
 
@@ -218,6 +221,6 @@ void displayRequiredTemperature(int temp)
   displayOn = true;
   displayMillis = millis();
 }
-
+#endif
 
 #endif

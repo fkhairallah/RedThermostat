@@ -20,6 +20,9 @@ or it can have a display, ability to set required temp, up/down buttons and can 
     Upgraded to support ArduinoJSON 6 
     WifiConfig & MQTTConfig now contain customizable sections
 
+## I2C-Display Branch
+Full implementation of I2C OLD display
+
 
 # Hardware Notes
 
