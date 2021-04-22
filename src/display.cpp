@@ -120,13 +120,13 @@ void serviceDisplay()
 {
   if (displayOn)
   {
-    if (millis() > (displayMillis + (_DISPLAY_INTERVAL * 3)))
+    if (millis() > (displayMillis + (unsigned long)(_DISPLAY_INTERVAL * 3)))
     {
       display.clearDisplay();
       display.display();
       displayOn = false;
     }
-    else if (millis() > (displayMillis + _DISPLAY_INTERVAL))
+    else if (millis() > (displayMillis + (unsigned long)_DISPLAY_INTERVAL))
     {
       display.dim(true);
     }
@@ -156,7 +156,7 @@ void displayStatus()
 
 }
 
-void displayTemperature(double temp)
+void displayTemperature(float temp)
 {
   int16_t x1, y1;
   uint16_t w, h;

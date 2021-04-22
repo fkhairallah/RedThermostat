@@ -29,6 +29,8 @@ EasyButton wakeButton(pgm_pin);
 EasyButton upButton(up_pin);
 EasyButton downButton(down_pin);
 bool heatIsOn = false;
+int requiredTemperature;
+
 #endif
 
 /*
@@ -112,8 +114,7 @@ void setup() {
   pinMode(SCL_pin, OUTPUT);
   pinMode(SDA_pin, OUTPUT);
 
-  int requiredTemperature;
-
+  
 #endif
 }
 
