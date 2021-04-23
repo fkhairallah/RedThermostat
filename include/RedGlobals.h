@@ -20,11 +20,11 @@
 //#define BUTTONS_PRESENT     // indicates up/down buttons are present
 
 #define _TEMP_SENSOR_PERIOD 10000         // in ms the frequency of temperature sensor reading
-#define _SEND_ROOM_TEMP_INTERVAL_MS 60000 // in ms how often the temperature is sent back to the server
 #define TEMPERATURE_PRECISION 9           // Lower resolution
-#define _DISPLAY_INTERVAL 5000              // in ms how long before the display is dimmed then turned off
+#define _SEND_ROOM_TEMP_INTERVAL_MS 60000 // in ms how often the temperature is sent back to the server
+#define _DISPLAY_INTERVAL 10000           // in ms how long before the display is dimmed then turned off
 
-#define VERSION "V1.3"  // N.B: document changes in README.md
+#define VERSION "V1.4B"  // N.B: document changes in README.md
 #define MQTT_TOPIC_PREFIX "thermostat" // prefix for all MQTT topics
 
 // in WiFiConf

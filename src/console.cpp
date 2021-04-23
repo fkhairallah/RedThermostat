@@ -30,6 +30,7 @@ void executeCustomCommands(char* commandString,char* parameterString)
    if (strcmp(console.commandString, "temp") == 0)
   {
     console.printf("Current temperature reading = %0.1f\r\n",averageTemp);
+    displayTemperature(averageTemp);
   }
 
 }
