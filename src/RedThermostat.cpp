@@ -67,11 +67,14 @@ void tick()
 void setup() {
   pinMode(blueLED, OUTPUT);
 
-#ifdef BUTTONS_PRESENT
+#ifdef HEAT_POWER
   // configure the pin and make sure heat isn't turned on
   pinMode(heat_pin, OUTPUT);
   digitalWrite(heat_pin, LOW);
+#endif
 
+#ifdef BUTTONS_PRESENT
+  
   wakeButton.begin();
   wakeButton.onPressed(wakeButtonPressed);
   wakeButton.onPressedFor(1500, statusButtonPressed);
@@ -112,7 +115,9 @@ void setup() {
   pinMode(SCL_pin, FUNCTION_3);
   pinMode(SDA_pin, FUNCTION_3);
   pinMode(SCL_pin, OUTPUT);
-  pinMode(SDA_pin, OUTPUT);  
+  pinMode(SDA_pin, OUTPUT);
+  configureDisplay();
+  displayStatus();
 #endif
 }
 
@@ -211,6 +216,7 @@ void updateTemperature(float temp, float temp2)
     tempAccumulator = 0;
     tempNumberOfReading = 0;
     publishTemperature(averageTemp);
+    displayTemperature(averageTemp);
     lastTempSend = millis();
 
     tick();

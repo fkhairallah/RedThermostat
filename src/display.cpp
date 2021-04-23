@@ -139,6 +139,7 @@ void displayStatus()
 {
   if (!displayPresent) return;
 
+  display.setTextSize(1);
   display.clearDisplay();
   display.dim(false);
   display.setFont();
@@ -176,12 +177,20 @@ void displayTemperature(float temp)
   display.setFont(&FreeSansBold24pt7b);
 
   if (temp > -900)
-    sprintf(tempStr, "%.1f", temp);
+    sprintf(tempStr, "%.0f", temp);
   else
     sprintf(tempStr, "NR");
   display.getTextBounds(tempStr, 0, 50, &x1, &y1, &w, &h);
   display.setCursor((display.width() - w) / 2, (display.height() + h) / 2); // Start at top-left corner
   display.print(tempStr);
+
+  // simulate a Degree symbol by putting an 'o' in smaller font at top right corner
+  display.setFont();
+  display.setTextSize(2);
+  display.setCursor(display.getCursorX(), display.getCursorY() - h + 5); // top right 
+  display.print("o");
+
+  // display the temp
   display.display();
   displayOn = true;
   displayMillis = millis();

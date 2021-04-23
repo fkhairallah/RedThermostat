@@ -17,7 +17,8 @@
 
 #define TEMP_SENSOR_PRESENT // indicates a temperature sensor is present
 #define DISPLAY_PRESENT     // indicates a screen is present
-//#define BUTTONS_PRESENT     // indicates up/down buttons are present
+#define BUTTONS_PRESENT     // indicates up/down buttons are present
+//#define HEAT_POWER          // relay to turn aux heat on
 
 #define _TEMP_SENSOR_PERIOD 10000         // in ms the frequency of temperature sensor reading
 #define TEMPERATURE_PRECISION 9           // Lower resolution

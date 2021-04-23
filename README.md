@@ -6,7 +6,15 @@ It can exist as a simple temperature sensor
 
 or it can have a display, ability to set required temp, up/down buttons and can drive supplemental electric heat
 
-***Because of the minimal functionaly, this is considered the master template for all other [RED] devices***
+RedGlobals.h has a number of #DEFINE switches that influence how this works:
+
+- TEMP_SENSOR_PRESENT adds temperature reporting functionality
+- DISPLAY_PRESENT shows current temperature on the display
+- BUTTONS_PRESENT includes full thermostat functionality and the ability to set required temp
+
+*** N.B.: A subset of the buttons can be implemented in hardware ***
+
+*** N.B.2: Because of the minimal functionaly, this is considered the master template for all other [RED] devices***
 
 # Version History
 
@@ -20,14 +28,27 @@ or it can have a display, ability to set required temp, up/down buttons and can 
     Upgraded to support ArduinoJSON 6 
     WifiConfig & MQTTConfig now contain customizable sections
 
-## I2C-Display Branch
-Full implementation of I2C OLD display
+## V1.4
+
+I2C-Display Branch 
+Full implementation of I2C OLD display on a buttonless Wemos D1 mini 
+
+![](./media/wemosd1mini.png)
 
 
 # Hardware Notes
 
-This program will probably run on a multitude of hardware. One variance is a naked temperature reporting board, the other is equipped with a display up/down keys and acts as a traditional thermostat. The two version are differentied with the ***#define DISPLAY_PRESENT***
+This program will probably run on a multitude of hardware. One variance is a naked temperature reporting board, the other is equipped with a display up/down keys and acts as a traditional thermostat. 
 
+## Wemos D1 Mini
+- Pin 0  is the program pin but also wakes the device and turn the screen on
+- Pin 2 blueLED on ESP12e
+- Pin 5 SCL drives the display
+- Pin 4 SDA drives the display
+- Pin 12 OneWire bus for temp sensors
+
+
+## Custom Board to replace Wall dumb thermostat 
 - Pin 0  is the program pin but also wakes the device and turn the screen on
 - Pin 2 blueLED on ESP12e
 - Pin 1 SCL drives the display
