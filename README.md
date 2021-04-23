@@ -20,14 +20,27 @@ or it can have a display, ability to set required temp, up/down buttons and can 
     Upgraded to support ArduinoJSON 6 
     WifiConfig & MQTTConfig now contain customizable sections
 
-## I2C-Display Branch
-Full implementation of I2C OLD display
+## V1.4
+
+I2C-Display Branch 
+Full implementation of I2C OLD display on a buttonless Wemos D1 mini 
+
+![](./media/wemosd1mini.png)
 
 
 # Hardware Notes
 
 This program will probably run on a multitude of hardware. One variance is a naked temperature reporting board, the other is equipped with a display up/down keys and acts as a traditional thermostat. The two version are differentied with the ***#define DISPLAY_PRESENT***
 
+## Wemos D1 Mini
+- Pin 0  is the program pin but also wakes the device and turn the screen on
+- Pin 2 blueLED on ESP12e
+- Pin 5 SCL drives the display
+- Pin 4 SDA drives the display
+- Pin 12 OneWire bus for temp sensors
+
+
+## Custom Board to replace Wall dumb thermostat 
 - Pin 0  is the program pin but also wakes the device and turn the screen on
 - Pin 2 blueLED on ESP12e
 - Pin 1 SCL drives the display
