@@ -130,6 +130,7 @@ void serviceDisplay()
     }
     else if (millis() > (displayMillis + (unsigned long)_DISPLAY_INTERVAL))
     {
+      display.clearDisplay();
       display.dim(true);
     }
   }
