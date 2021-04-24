@@ -48,6 +48,14 @@ This program will probably run on a multitude of hardware. One variance is a nak
 - Pin 12 OneWire bus for temp sensors
 
 
+## Wemos D1 Mini
+- Pin 0  is the program pin but also wakes the device and turn the screen on
+- Pin 2 blueLED on ESP12e
+- Pin 5 SCL drives the display
+- Pin 4 SDA drives the display
+- Pin 12 OneWire bus for temp sensors
+
+
 ## Custom Board to replace Wall dumb thermostat 
 - Pin 0  is the program pin but also wakes the device and turn the screen on
 - Pin 2 blueLED on ESP12e
