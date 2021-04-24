@@ -132,6 +132,7 @@ void serviceDisplay()
     {
       display.clearDisplay();
       display.dim(true);
+      display.ssd1306_command(SSD1306_DISPLAYOFF);
     }
   }
 }
@@ -140,6 +141,7 @@ void displayStatus()
 {
   if (!displayPresent) return;
 
+  display.ssd1306_command(SSD1306_DISPLAYON); // To switch display back on  
   display.setTextSize(1);
   display.clearDisplay();
   display.dim(false);
@@ -168,6 +170,8 @@ void displayTemperature(float temp)
 
   if (!displayPresent) return;
 
+
+  display.ssd1306_command(SSD1306_DISPLAYON); // To switch display back on  
   display.clearDisplay();
   display.dim(false);
   display.setTextSize(0);

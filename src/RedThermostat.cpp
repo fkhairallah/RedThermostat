@@ -133,7 +133,7 @@ void setup() {
 */
 void loop() {
 
-  delay(1000);
+  delay(100);  // Delay cause ESP8266 to go to sleep
 
   checkConnection();  // check WIFI connection
 
