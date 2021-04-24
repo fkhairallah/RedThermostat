@@ -119,6 +119,8 @@ void setup() {
   configureDisplay();
   displayStatus();
 #endif
+
+  ledOFF(); // turn LED off to save power
 }
 
 
@@ -218,10 +220,10 @@ void updateTemperature(float temp, float temp2)
     tempAccumulator = 0;
     tempNumberOfReading = 0;
     publishTemperature(averageTemp);
-    displayTemperature(averageTemp);
+    //displayTemperature(averageTemp);
     lastTempSend = millis();
 
-    tick();
+    //tick(); // comment out to save power
   }
 
 }
