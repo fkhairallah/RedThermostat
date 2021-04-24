@@ -218,7 +218,7 @@ void updateTemperature(float temp, float temp2)
     tempAccumulator = 0;
     tempNumberOfReading = 0;
     publishTemperature(averageTemp);
-    displayTemperature(averageTemp);
+    //displayTemperature(averageTemp);
     lastTempSend = millis();
 
     tick();
