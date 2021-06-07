@@ -33,6 +33,15 @@ RedGlobals.h has a number of #DEFINE switches that influence how this works:
 I2C-Display Branch 
 Full implementation of I2C OLD display on a buttonless Wemos D1 mini 
 
+## V1.5
+
+It seems that the WEMOD generates enough heat to impact the sensor reading. One option is to
+connnect D0/Wake pin to the RST pin and use deep sleep mode. The other is use sensor with a wire lead.
+
+However, as an interim fix, we've implemented a linear adjustment function that tries to compensate
+using measured reading of real temp vs reported temp.
+
+
 ![](./media/wemosd1mini.png)
 
 

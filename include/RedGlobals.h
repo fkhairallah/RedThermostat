@@ -25,7 +25,7 @@
 #define _SEND_ROOM_TEMP_INTERVAL_MS 60000 // in ms how often the temperature is sent back to the server
 #define _DISPLAY_INTERVAL 10000           // in ms how long before the display is dimmed then turned off
 
-#define VERSION "V1.4B"  // N.B: document changes in README.md
+#define VERSION "V1.5"  // N.B: document changes in README.md
 #define MQTT_TOPIC_PREFIX "thermostat" // prefix for all MQTT topics
 
 // in WiFiConf
