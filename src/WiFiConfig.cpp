@@ -27,7 +27,7 @@
 
 // configuration parameters
 // Hostname, AP name & MQTT clientID
-char myHostName[64];
+char myHostName[128];
 
 //flag for saving data
 bool shouldSaveConfig = false;
@@ -40,7 +40,7 @@ Ticker wticker;
 
 //define your default values here, if there are different values in config.json, they are overwritten.
 char deviceLocation[64] = "NEW";
-char mqttServer[64] = "RyeManorPi.local";
+char mqttServer[64] = "192.168.68.10";
 char mqttPort[16] = "1883";
 char mqttUser[64] = "";
 char mqttPwd[64] = "";
