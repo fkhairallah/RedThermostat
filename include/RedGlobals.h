@@ -1,8 +1,9 @@
 
 #ifndef RED_GLOBALS_H
 #define RED_GLOBALS_H
+
+#include <Homie.h>
 #include <dConsole.h>
-#include <PubSubClient.h>
 #include <Ticker.h>
 
 #ifndef _PINS_H
@@ -25,32 +26,32 @@
 #define _SEND_ROOM_TEMP_INTERVAL_MS 60000 // in ms how often the temperature is sent back to the server
 #define _DISPLAY_INTERVAL 10000           // in ms how long before the display is dimmed then turned off
 
-#define VERSION "V1.5"  // N.B: document changes in README.md
+#define VERSION "V2.0"  // N.B: document changes in README.md
 #define MQTT_TOPIC_PREFIX "thermostat" // prefix for all MQTT topics
 
 // in WiFiConf
-extern char myHostName[];
-extern char deviceLocation[];
-extern char mqttServer[];
-extern char mqttPort[];
-extern char mqttUser[];
-extern char mqttPwd[];
-void configureESP();       // load configuration from FLASH & configure WIFI
-void checkConnection(); // check WIFI connection
-void writeConfigToDisk();
-void configureOTA(char *hostName);
+// extern char myHostName[];
+// extern char deviceLocation[];
+// extern char mqttServer[];
+// extern char mqttPort[];
+// extern char mqttUser[];
+// extern char mqttPwd[];
+// void configureESP();       // load configuration from FLASH & configure WIFI
+// void checkConnection(); // check WIFI connection
+// void writeConfigToDisk();
+// void configureOTA(char *hostName);
 
 // in MQTTConfig
 extern bool debugMode;
-void configureMQTT();
-bool checkMQTTConnection();
-void mqttDisconnect();
-#ifdef TEMP_SENSOR_PRESENT
-void publishTemperature(int temp);
-#endif
-#ifdef DISPLAY_PRESENT
-void publishRequiredTemp(int temp);
-#endif
+// void configureMQTT();
+// bool checkMQTTConnection();
+// void mqttDisconnect();
+// #ifdef TEMP_SENSOR_PRESENT
+// void publishTemperature(int temp);
+// #endif
+// #ifdef DISPLAY_PRESENT
+// void publishRequiredTemp(int temp);
+// #endif
 
 // in console.ino
 extern dConsole console;

@@ -149,10 +149,10 @@ void displayStatus()
   display.setCursor(0, 0);
   display.println("[RED]Thermostat " + String(VERSION));
   display.println(WiFi.localIP().toString());
-  display.print("Location: ");
-  display.println(deviceLocation);
+  //display.print("Location: ");
+  //display.println(deviceLocation);
   display.print("MQTT: ");
-  display.println(mqttServer);
+  display.println(Homie.getConfiguration().mqtt.server.host);
   display.print("Found " + String(numberOfDevices));
   display.println(" sensors");
   display.println("long press = Status;");

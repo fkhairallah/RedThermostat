@@ -3,7 +3,7 @@
  *    Implements functionality for telnet and serial console
  * 
  *********************************************************************************/
-#include <WiFiManager.h> //https://github.com/tzapu/WiFiManager
+//#include <WiFiManager.h> //https://github.com/tzapu/WiFiManager
 #include <RedGlobals.h>
 
 dConsole console;
@@ -63,9 +63,9 @@ void handleConsole()
       console.print(MQTT_TOPIC_PREFIX);
       console.print(" ");
       console.println(VERSION);
-      console.printf("Host: %s - %s @", myHostName, deviceLocation);
-      console.println(WiFi.localIP().toString());
-      console.printf("MQTT Server %s, port: %s\r\n", mqttServer, mqttPort);
+//      console.printf("Host: %s - %s @", myHostName, deviceLocation);
+//      console.println(WiFi.localIP().toString());
+//      console.printf("MQTT Server %s, port: %s\r\n", mqttServer, mqttPort);
       console.println("Commands: ?, debug, location room, mqtt server, reset (Factory), reboot, quit");
       console.println(CUSTOM_COMMANDS);
     }
@@ -75,14 +75,14 @@ void handleConsole()
       console.print("Debug mode is now ");
       console.println(debugMode);
     }
-    if (strcmp(console.commandString, "reset") == 0)
-    {
-      console.print("Reseting configuration...");
-      //reset settings - for testing
-      WiFiManager wifiManager;
-      wifiManager.resetSettings();
-      console.println(" Done.");
-    }
+    // if (strcmp(console.commandString, "reset") == 0)
+    // {
+    //   console.print("Reseting configuration...");
+    //   //reset settings - for testing
+    //   WiFiManager wifiManager;
+    //   wifiManager.resetSettings();
+    //   console.println(" Done.");
+    // }
     if (strcmp(console.commandString, "reboot") == 0)
     {
       console.print("Rebooting...");
@@ -91,21 +91,21 @@ void handleConsole()
       ESP.reset();
       delay(5000);
     }
-    if (strcmp(console.commandString, "mqtt") == 0)
-    {
-      strcpy(mqttServer, console.parameterString);
-      writeConfigToDisk();
-      console.print("MQTT server changed to ");
-      console.println(mqttServer);
-      mqttDisconnect();
-    }
-    if (strcmp(console.commandString, "location") == 0)
-    {
-      strcpy(deviceLocation, console.parameterString);
-      writeConfigToDisk();
-      console.printf("location changed to %s\r\n", deviceLocation);
-      console.println("Change will take effect after next reboot");
-    }
+    // if (strcmp(console.commandString, "mqtt") == 0)
+    // {
+    //   strcpy(mqttServer, console.parameterString);
+    //   writeConfigToDisk();
+    //   console.print("MQTT server changed to ");
+    //   console.println(mqttServer);
+    //   mqttDisconnect();
+    // }
+    // if (strcmp(console.commandString, "location") == 0)
+    // {
+    //   strcpy(deviceLocation, console.parameterString);
+    //   writeConfigToDisk();
+    //   console.printf("location changed to %s\r\n", deviceLocation);
+    //   console.println("Change will take effect after next reboot");
+    // }
     if (strcmp(console.commandString, "quit") == 0)
     {
       console.print("quiting...");

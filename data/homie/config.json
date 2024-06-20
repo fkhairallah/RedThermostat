@@ -1,0 +1,23 @@
+{
+    "name": "[RED]Thermostat",
+    "device_id": "red-thermostat-den",
+    "device_stats_interval": 300,
+    "wifi": {
+        "ssid": "Stonewall Jackson",
+        "password": "fady khairallah"
+    },
+    "mqtt": {
+        "host": "192.168.68.10",
+        "port": 1883,
+        "base_topic": "RED/",
+        "auth": false,
+        "username": "user",
+        "password": "pass"
+    },
+    "ota": {
+        "enabled": true
+    },
+    "settings": {
+        "location": "Den"
+    }
+}

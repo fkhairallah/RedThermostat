@@ -71,6 +71,67 @@ float compensateForBoardHeat(float inTemp)
   return inTemp * mAdjustment + cAdjustment;
 }
 
+bool changeSetTemperature(const HomieRange &range, const String &value)
+{
+  Homie.getLogger() << "Tide Handler got " << value << endl;
+  // lightNode.setProperty("pause").send(value);
+
+  // Homie.getMqttClient().publish("foo", 1, true,  value.c_str());
+
+  return true;
+}
+/*
+ * ********************************************************************************
+
+      Homie setup & loop
+
+
+ * ********************************************************************************
+*/
+HomieNode thermostatNode("temperature", "Temperature", "temperature");
+HomieSetting<const char *> location("location", "Name or Location of the device");
+bool debugMode = false;
+
+// Code which should run AFTER the WiFi is connected.
+void setupHandler()
+{
+
+
+  Homie.getLogger() << "Location: "
+                    << location.get()
+                    << endl;
+
+  }
+
+// Code which should run in normal loop(), after setupHandler() finished.
+void loopHandler()
+{
+  // if (millis() - lastTemperatureSent >= TEMPERATURE_INTERVAL * 1000UL || lastTemperatureSent == 0)
+  // {
+  //   float temperature = 22; // Fake temperature here, for the example
+  //   Homie.getLogger() << "Temperature: " << temperature << " °C" << endl;
+  //   thermostatNode.setProperty("degrees").send(String(temperature));
+  //   lastTemperatureSent = millis();
+  // }
+  // service temperature and other sensos
+  serviceSensors();
+
+#ifdef BUTTONS_PRESENT
+  // service the buttons
+  wakeButton.read();
+  upButton.read();
+  downButton.read();
+#endif
+
+#ifdef DISPLAY_PRESENT
+  // service display taking care of diming it and turning it off after _DISPLAY_INTERVAL
+  serviceDisplay();
+#endif
+
+  handleConsole(); // handle any commands from console
+}
+
+
 /*
  * ********************************************************************************
 
@@ -82,6 +143,11 @@ float compensateForBoardHeat(float inTemp)
 
 void setup() {
   pinMode(blueLED, OUTPUT);
+  setupConsole();
+
+  // console.enableSerial(&Serial, true);
+  console.print("[RED]Thermostat ");
+  console.println(VERSION);
 
 #ifdef HEAT_POWER
   // configure the pin and make sure heat isn't turned on
@@ -100,24 +166,22 @@ void setup() {
   downButton.onPressed(downButtonPressed);
 #endif
 
-  setupConsole();
 
-  //console.enableSerial(&Serial, true);
-  console.print("[RED]Thermostat ");
-  console.println(VERSION);
+  // homie setup
+  Homie_setBrand("[RED]");
 
+  Homie_setFirmware("red-tide-firmware", "1.0.0");
+  Homie.setLedPin(blueLED, HIGH);
+  Homie.setSetupFunction(setupHandler).setLoopFunction(loopHandler);
+  // define the channels
+  thermostatNode.advertise("temperature").setName("Current Temperature").setDatatype("float").setUnit("ºF");
+  thermostatNode.advertise("settemperature").setName("Set Temperature").setDatatype("float").setUnit("ºF").settable(changeSetTemperature);
 
-  // Configure WIFI
-  configureESP(); // load configuration from FLASH & configure WIFI
+  Serial << "Homie Setup...";
+  Homie.setup();
+  Serial << "Done" << endl;
 
-  digitalWrite(blueLED, LOW);
-  console.print("Telnet Enabled on ");
-  console.println(WiFi.localIP().toString());
-
-  configureMQTT();
-
-
-  //  // configure thermostat sensor
+  // configure thermostat sensor
   tempAccumulator = 0;
   tempNumberOfReading = 0;
   averageTemp = -9999;
@@ -149,28 +213,7 @@ void setup() {
 */
 void loop() {
 
-  delay(100);  // Delay cause ESP8266 to go to sleep
-
-  checkConnection();  // check WIFI connection
-
-  // service temperature and other sensos
-  serviceSensors();
-
-#ifdef BUTTONS_PRESENT
-  // service the buttons
-  wakeButton.read();
-  upButton.read();
-  downButton.read();
-#endif
-
-#ifdef DISPLAY_PRESENT
-  // service display taking care of diming it and turning it off after _DISPLAY_INTERVAL
-  serviceDisplay();
-#endif
-
-  checkMQTTConnection(); // check MQTT
-
-  handleConsole(); // handle any commands from console
+  Homie.loop();
 
 }
 
@@ -185,29 +228,29 @@ void loop() {
 
 void wakeButtonPressed()
 {
-  console.println("Button: Wake");
+  //console.println("Button: Wake");
   displayTemperature(averageTemp);
 }
 
 void statusButtonPressed()
 {
-  console.println("Button: status");
+  //console.println("Button: status");
   displayStatus();
 }
 
 void upButtonPressed()
 {
-  console.println("Button: up");
+  //console.println("Button: up");
   requiredTemperature++;
   displayRequiredTemperature(requiredTemperature);
-  publishRequiredTemp(requiredTemperature);
-
+  //publishRequiredTemp(requiredTemperature);
+  thermostatNode.setProperty("settemperature").send(String(requiredTemperature));
 }
 
 void downButtonPressed()
 {
 
-  console.println("Button: down");
+  //console.println("Button: down");
   requiredTemperature--;
   displayRequiredTemperature(requiredTemperature);
 
@@ -235,7 +278,8 @@ void updateTemperature(float temp, float temp2)
     averageTemp = compensateForBoardHeat( tempAccumulator / tempNumberOfReading );
     tempAccumulator = 0;
     tempNumberOfReading = 0;
-    publishTemperature(averageTemp);
+    //publishTemperature(averageTemp);
+    thermostatNode.setProperty("temperature").send(String(averageTemp));
     //displayTemperature(averageTemp);
     lastTempSend = millis();
 
