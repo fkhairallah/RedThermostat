@@ -201,6 +201,11 @@ void setup() {
 #endif
 
   ledOFF(); // turn LED off to save power
+  
+  
+  configureOTA(Homie.getConfiguration().deviceId);
+
+
 }
 
 
@@ -214,7 +219,7 @@ void setup() {
 void loop() {
 
   Homie.loop();
-
+  handleOTA();
 }
 
 /*

@@ -29,29 +29,13 @@
 #define VERSION "V2.0"  // N.B: document changes in README.md
 #define MQTT_TOPIC_PREFIX "thermostat" // prefix for all MQTT topics
 
-// in WiFiConf
-// extern char myHostName[];
-// extern char deviceLocation[];
-// extern char mqttServer[];
-// extern char mqttPort[];
-// extern char mqttUser[];
-// extern char mqttPwd[];
-// void configureESP();       // load configuration from FLASH & configure WIFI
-// void checkConnection(); // check WIFI connection
-// void writeConfigToDisk();
-// void configureOTA(char *hostName);
-
-// in MQTTConfig
+// in RedThermostat
 extern bool debugMode;
-// void configureMQTT();
-// bool checkMQTTConnection();
-// void mqttDisconnect();
-// #ifdef TEMP_SENSOR_PRESENT
-// void publishTemperature(int temp);
-// #endif
-// #ifdef DISPLAY_PRESENT
-// void publishRequiredTemp(int temp);
-// #endif
+
+// in esp_ota.h
+void configureOTA(const char *hostName);
+void handleOTA();
+
 
 // in console.ino
 extern dConsole console;
