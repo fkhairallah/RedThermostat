@@ -101,6 +101,8 @@ void setupHandler()
                     << location.get()
                     << endl;
 
+  ledOFF();
+
   }
 
 // Code which should run in normal loop(), after setupHandler() finished.

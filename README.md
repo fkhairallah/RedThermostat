@@ -19,7 +19,7 @@ RedGlobals.h has a number of #DEFINE switches that influence how this works:
 # Version History
 
 ## V2.0
-    switch to Homie. Implemented Deep sleep between temperature reading to reduce heat.
+    switch to Homie
 
 ## V1.1
     Initiale release on Arduino IDE

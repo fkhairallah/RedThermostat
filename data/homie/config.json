@@ -1,6 +1,6 @@
 {
     "name": "[RED]Thermostat",
-    "device_id": "red-thermostat-den",
+    "device_id": "red-thermostat-NEW",
     "device_stats_interval": 300,
     "wifi": {
         "ssid": "Stonewall Jackson",
@@ -18,6 +18,6 @@
         "enabled": true
     },
     "settings": {
-        "location": "Den"
+        "location": "NEW"
     }
 }

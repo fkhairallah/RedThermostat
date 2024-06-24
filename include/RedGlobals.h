@@ -6,6 +6,11 @@
 #include <dConsole.h>
 #include <Ticker.h>
 
+// Pick either the small D1 with display or the Garage One.
+//#define D1
+#define GARAGE
+// #define CUSTOM_BOARD
+
 #ifndef _PINS_H
 #include <pins.h>
 #endif
@@ -17,8 +22,11 @@
 */
 
 #define TEMP_SENSOR_PRESENT // indicates a temperature sensor is present
+
+#ifdef D1
 #define DISPLAY_PRESENT     // indicates a screen is present
 #define BUTTONS_PRESENT     // indicates up/down buttons are present
+#endif
 //#define HEAT_POWER          // relay to turn aux heat on
 
 #define _TEMP_SENSOR_PERIOD 10000         // in ms the frequency of temperature sensor reading
