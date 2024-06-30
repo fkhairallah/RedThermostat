@@ -10,9 +10,9 @@
 
  * ********************************************************************************
 */
+#include <RedGlobals.h>
 
 #ifdef DISPLAY_PRESENT
-#include <RedGlobals.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
