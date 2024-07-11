@@ -285,12 +285,9 @@ void updateTemperature(float temp, float temp2)
     averageTemp = compensateForBoardHeat( tempAccumulator / tempNumberOfReading );
     tempAccumulator = 0;
     tempNumberOfReading = 0;
-    //publishTemperature(averageTemp);
     thermostatNode.setProperty("temperature").send(String(averageTemp));
-    //displayTemperature(averageTemp);
     lastTempSend = millis();
-
-    //tick(); // comment out to save power
+    void ledOFF();
   }
 
 }
