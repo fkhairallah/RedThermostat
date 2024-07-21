@@ -237,6 +237,7 @@ void wakeButtonPressed()
 {
   //console.println("Button: Wake");
   displayTemperature(averageTemp);
+  ledOFF();
 }
 
 void statusButtonPressed()
@@ -287,7 +288,7 @@ void updateTemperature(float temp, float temp2)
     tempNumberOfReading = 0;
     thermostatNode.setProperty("temperature").send(String(averageTemp));
     lastTempSend = millis();
-    void ledOFF();
+    ledOFF();
   }
 
 }
