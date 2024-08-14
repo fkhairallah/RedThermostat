@@ -210,7 +210,28 @@ void setup() {
 
 }
 
+// // sleep
+// void wakeCallback()
+// {
+//   console.print("End LightSleep:");
+//   console.println(millis());
+//   console.flush();
+// }
 
+// void goToSleep(uint32_t sleep_time_in_ms = 1000)
+// {
+//   ;
+//   console.print("go to LightSleep:");
+//   console.println(millis());
+//   console.flush();
+
+//   wifi_set_opmode(NULL_MODE);
+//   wifi_fpm_set_sleep_type(LIGHT_SLEEP_T);
+//   wifi_fpm_open();
+//   wifi_fpm_set_wakeup_cb(wakeCallback);
+//   wifi_fpm_do_sleep(sleep_time_in_ms * 1000);
+//   delay(sleep_time_in_ms + 1);
+// }
 /*
  * ********************************************************************************
 
@@ -222,6 +243,7 @@ void loop() {
 
   Homie.loop();
   handleOTA();
+  
 }
 
 /*
@@ -290,6 +312,9 @@ void updateTemperature(float temp, float temp2)
     lastTempSend = millis();
     ledOFF();
   }
-
+  //else if (!otaInProgress)
+    //goToSleep(500);
 }
+
+
 

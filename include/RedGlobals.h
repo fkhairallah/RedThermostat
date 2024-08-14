@@ -34,13 +34,14 @@
 #define _SEND_ROOM_TEMP_INTERVAL_MS 60000 // in ms how often the temperature is sent back to the server
 #define _DISPLAY_INTERVAL 10000           // in ms how long before the display is dimmed then turned off
 
-#define VERSION "V2.0"  // N.B: document changes in README.md
+#define VERSION "V2.1"  // N.B: document changes in README.md
 #define MQTT_TOPIC_PREFIX "thermostat" // prefix for all MQTT topics
 
 // in RedThermostat
 extern bool debugMode;
 
 // in esp_ota.h
+extern bool otaInProgress;
 void configureOTA(const char *hostName);
 void handleOTA();
 
